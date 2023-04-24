@@ -10,7 +10,7 @@ function Nav() {
 
   return (
     <aside className="p-4 pr-0">
-      <Link href="/" className="flex gap-1 mb-4 mr-10">
+      <Link href="/" className="flex gap-1 mb-4 mr-12">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
