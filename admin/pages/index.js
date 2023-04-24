@@ -5,7 +5,7 @@ export default function Home() {
   const { data: session } = useSession();
   return (
     <Layout>
-      <div className="text-teal-900 flex justify-between">
+      <div className="text-teal-500 flex justify-between">
         <h2>
           {" "}
           Hello, <b>{session?.user?.name}</b>
