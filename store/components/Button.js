@@ -23,6 +23,12 @@ background-color: #fff;
 color; #000;
 `}
   ${(props) =>
+    props.block &&
+    css`
+      display: block;
+      width: 100%;
+    `}
+  ${(props) =>
     props.white &&
     props.outline &&
     css`
