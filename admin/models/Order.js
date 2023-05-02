@@ -11,9 +11,7 @@ const OrderSchema = new Schema(
     country: String,
     paid: Boolean,
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 export const Order = models?.Order || model("Order", OrderSchema);

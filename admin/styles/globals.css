@@ -31,11 +31,11 @@ table.basic {
   @apply w-full
 }
 
-table.basic thead tr td {
+table.basic thead tr td, table.basic thead tr th {
   @apply bg-teal-100
 }
 
-table.basic tr td {
+table.basic tr td, table.basic thead tr th {
   @apply border border-teal-200 p-1
 }
 
