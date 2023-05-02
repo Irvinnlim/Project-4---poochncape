@@ -4,6 +4,7 @@ import Center from "@/components/Center";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
 import Table from "@/components/Table";
+import WhiteBox from "@/components/WhiteBox";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -13,12 +14,6 @@ const ColumnsWrapper = styled.div`
   grid-template-columns: 1.3fr 0.7fr;
   gap: 40px;
   margin-top: 40px;
-`;
-
-const Box = styled.div`
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 30px;
 `;
 
 const ProductInfoCell = styled.td`
@@ -121,10 +116,10 @@ export default function CartPage() {
         <Header />
         <Center>
           <ColumnsWrapper>
-            <Box>
+            <WhiteBox>
               <h1>Thanks for your order!</h1>
               <p>We will email you when your order is shipped.</p>
-            </Box>
+            </WhiteBox>
           </ColumnsWrapper>
         </Center>
       </>
@@ -136,7 +131,7 @@ export default function CartPage() {
       <Header />
       <Center>
         <ColumnsWrapper>
-          <Box>
+          <WhiteBox>
             <h2>Cart</h2>
             {!cartProducts.length && <div>Your cart is empty</div>}
             {products?.length > 0 && (
@@ -186,8 +181,8 @@ export default function CartPage() {
                 </tbody>
               </Table>
             )}
-          </Box>
-          <Box>
+          </WhiteBox>
+          <WhiteBox>
             <h2>Order information</h2>
             <Input
               type="text"
@@ -236,7 +231,7 @@ export default function CartPage() {
             <Button block primary onClick={goToPayment}>
               Continue to payment
             </Button>
-          </Box>
+          </WhiteBox>
         </ColumnsWrapper>
       </Center>
     </>
