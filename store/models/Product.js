@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import mongoose, { model, Schema, models } from "mongoose";
 
 const ProductSchema = new Schema(

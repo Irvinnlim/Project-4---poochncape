@@ -81,11 +81,42 @@ export default function CartPage() {
     removeProduct(id);
   }
 
+  async function goToPayment() {
+    const response = await axios.post("/api/checkout", {
+      name,
+      email,
+      city,
+      postalCode,
+      streetAddress,
+      country,
+      cartProducts,
+    });
+    if (response.data.url) {
+      window.location = response.data.url;
+    }
+  }
+
   let productsTotal = 0;
   for (const productId of cartProducts) {
     const price =
       products.find((product) => product._id === productId)?.price || 0;
     productsTotal += price;
+  }
+
+  if (window.location.href.includes("success")) {
+    return (
+      <>
+        <Header />
+        <Center>
+          <ColumnsWrapper>
+            <Box>
+              <h1>Thanks for your order!</h1>
+              <p>We will email you when your order is shipped.</p>
+            </Box>
+          </ColumnsWrapper>
+        </Center>
+      </>
+    );
   }
 
   return (
@@ -190,7 +221,7 @@ export default function CartPage() {
               name="country"
               onChange={(ev) => setCountry(ev.target.value)}
             />
-            <Button block primary>
+            <Button block primary onClick={goToPayment}>
               Continue to payment
             </Button>
           </Box>
