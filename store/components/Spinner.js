@@ -10,14 +10,14 @@ const Wrapper = styled.div`
     justify-content:center;
   `
       : `
-    border: 5xp solid teal;
+    border: 5xp solid coral;
   `}
 `;
 
 export default function Spinner({ fullWidth }) {
   return (
     <Wrapper fullWidth={fullWidth}>
-      <BounceLoader speedMultiplier={3} color={"#4FD1C5"} />
+      <BounceLoader speedMultiplier={3} color={"#ff7f7f"} />
     </Wrapper>
   );
 }
