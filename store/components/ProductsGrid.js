@@ -6,13 +6,17 @@ export default function ProductsGrid({ products }) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    @media screen and (min-width: 768px) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
   `;
 
   return (
     <StyledProductsGrid>
-      {products.map((product) => (
-        <ProductBox key={product._id} {...product} />
-      ))}
+      {products?.length > 0 &&
+        products.map((product) => (
+          <ProductBox key={product._id} {...product} />
+        ))}
     </StyledProductsGrid>
   );
 }
