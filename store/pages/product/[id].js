@@ -50,7 +50,11 @@ export default function ProductPage({ product }) {
               <div>
                 <Price>${product.price}</Price>
               </div>
-              <FlyingButton main _id={product._id} src={product.images?.[0]}>
+              <FlyingButton
+                main={1}
+                _id={product._id}
+                src={product.images?.[0]}
+              >
                 <CartIcon /> Add to cart
               </FlyingButton>
             </PriceRow>

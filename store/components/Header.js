@@ -4,6 +4,7 @@ import Center from "./Center";
 import { useContext, useState } from "react";
 import { CartContext } from "./CartContext";
 import BarsIcon from "./icons/BarsIcon";
+import SearchIcon from "./icons/SearchIcon";
 
 const StyledHeader = styled.header`
   background-color: #ff7f7f;
@@ -83,7 +84,7 @@ const SideIcons = styled.div`
   a {
     display: inline-block;
     min-width: 20px;
-    color: white;
+    color: #555;
     svg {
       width: 14px;
       height: 14px;
@@ -108,6 +109,9 @@ export default function Header() {
             <NavLink href={"/cart"}>Cart ({cartProducts.length})</NavLink>
           </StyledNav>
           <SideIcons>
+            <Link href={"/search"}>
+              <SearchIcon />
+            </Link>
             <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
               <BarsIcon />
             </NavButton>
