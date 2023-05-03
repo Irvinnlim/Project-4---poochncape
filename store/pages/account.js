@@ -61,7 +61,7 @@ export default function AccountPage() {
         setCountry(response.data.country);
         setAddressLoaded(true);
       });
-    }, 3000);
+    }, 500);
   }, []);
 
   return (

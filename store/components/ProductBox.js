@@ -4,8 +4,15 @@ import CartIcon from "./icons/CartIcon";
 import Link from "next/link";
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
+import FlyingButton from "./FlyingButton";
 
-const ProductWrapper = styled.div``;
+const ProductWrapper = styled.div`
+  button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+`;
 
 const WhiteBox = styled(Link)`
   background-color: #fff;
@@ -16,6 +23,7 @@ const WhiteBox = styled(Link)`
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+  position: relative;
   img {
     max-width: 100%;
     max-height: 80px;
@@ -35,7 +43,11 @@ const ProductInfoBox = styled.div`
 `;
 
 const PriceRow = styled.div`
-  display: flex;
+  display: block;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    gap: 5px;
+  }
   align-items: center;
   justify-content: space-between;
   margin-top: 2px;
@@ -44,12 +56,16 @@ const PriceRow = styled.div`
 const Price = styled.div`
   font-size: 1.5rem;
   font-weight: 600;
+  text-align: right;
+  @media screen and (min-width: 768px) {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: left;
+  }
 `;
 
 export default function ProductBox({ _id, title, description, price, images }) {
   const url = "/product/" + _id;
-
-  const { addProduct } = useContext(CartContext);
 
   return (
     <ProductWrapper>
@@ -62,9 +78,9 @@ export default function ProductBox({ _id, title, description, price, images }) {
         <Title href={url}>{title}</Title>
         <PriceRow>
           <Price>${price}</Price>
-          <Button primary outline onClick={() => addProduct(_id)}>
+          <FlyingButton _id={_id} src={images?.[0]}>
             Add to cart
-          </Button>
+          </FlyingButton>
         </PriceRow>
       </ProductInfoBox>
     </ProductWrapper>

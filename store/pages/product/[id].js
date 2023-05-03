@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import { CartContext } from "@/components/CartContext";
 import Center from "@/components/Center";
+import FlyingButton from "@/components/FlyingButton";
 import Header from "@/components/Header";
 import ProductImages from "@/components/ProductImages";
 import Title from "@/components/Title";
@@ -13,7 +14,10 @@ import styled from "styled-components";
 
 const ColWrapper = styled.div`
   display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
+  grid-template-columns: 1fr;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
   gap: 40px;
   margin: 40px 0;
 `;
@@ -46,9 +50,9 @@ export default function ProductPage({ product }) {
               <div>
                 <Price>${product.price}</Price>
               </div>
-              <Button primary onClick={() => addProduct(product._id)}>
+              <FlyingButton main _id={product._id} src={product.images?.[0]}>
                 <CartIcon /> Add to cart
-              </Button>
+              </FlyingButton>
             </PriceRow>
           </div>
         </ColWrapper>
