@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import Center from "@/components/Center";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
+import ProductBox from "@/components/ProductBox";
 import Spinner from "@/components/Spinner";
 import WhiteBox from "@/components/WhiteBox";
 import axios from "axios";
@@ -24,6 +25,12 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
+const WishedProductsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+`;
+
 export default function AccountPage() {
   const { data: session } = useSession();
   const [name, setName] = useState("");
@@ -32,7 +39,9 @@ export default function AccountPage() {
   const [postalCode, setPostalCode] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
   const [country, setCountry] = useState("");
-  const [addressLoaded, setAddressLoaded] = useState(false);
+  const [addressLoaded, setAddressLoaded] = useState(true);
+  const [wishlistLoaded, setWishlistLoaded] = useState(true);
+  const [wishedProducts, setWishedProducts] = useState([]);
 
   async function logout() {
     await signOut({
@@ -50,19 +59,36 @@ export default function AccountPage() {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      axios.get("/api/address").then((response) => {
-        setName(response.data.name);
-        setName(response.data.name);
-        setEmail(response.data.email);
-        setCity(response.data.city);
-        setPostalCode(response.data.postalCode);
-        setStreetAddress(response.data.streetAddress);
-        setCountry(response.data.country);
-        setAddressLoaded(true);
-      });
-    }, 500);
-  }, []);
+    if (!session) {
+      return;
+    }
+    setAddressLoaded(false);
+    setWishlistLoaded(false);
+    axios.get("/api/address").then((response) => {
+      setName(response.data.name);
+      setName(response.data.name);
+      setEmail(response.data.email);
+      setCity(response.data.city);
+      setPostalCode(response.data.postalCode);
+      setStreetAddress(response.data.streetAddress);
+      setCountry(response.data.country);
+      setAddressLoaded(true);
+    });
+    axios.get("/api/wishlist").then((response) => {
+      setWishedProducts(
+        response.data.map((wishedProduct) => wishedProduct.product)
+      );
+      setWishlistLoaded(true);
+    });
+  }, [session]);
+
+  function productRemovedFromWishlist(idToRemove) {
+    setWishedProducts((products) => {
+      return [
+        ...products.filter((product) => product._id.toString() !== idToRemove),
+      ];
+    });
+  }
 
   return (
     <>
@@ -72,13 +98,39 @@ export default function AccountPage() {
           <div>
             <WhiteBox>
               <h2>Wishlist</h2>
+              <>
+                {!wishlistLoaded && <Spinner fullWidth={true} />}
+                {wishlistLoaded && (
+                  <>
+                    <WishedProductsGrid>
+                      {wishedProducts.length > 0 &&
+                        wishedProducts.map((wishedProduct) => (
+                          <ProductBox
+                            key={wishedProducts._id}
+                            {...wishedProduct}
+                            wished={true}
+                            onRemoveFromWishlist={productRemovedFromWishlist}
+                          />
+                        ))}
+                    </WishedProductsGrid>
+                    {wishedProducts.length === 0 && (
+                      <>
+                        {session && <p>Your wishlist is empty</p>}
+                        {!session && (
+                          <p>Login to add products to your wishlist</p>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
             </WhiteBox>
           </div>
           <div>
             <WhiteBox>
-              <h2>Account details</h2>
+              <h2>{session ? "Account details" : "Login"}</h2>
               {!addressLoaded && <Spinner fullWidth={true} />}
-              {addressLoaded && (
+              {addressLoaded && session && (
                 <>
                   <Input
                     type="text"
@@ -138,7 +190,7 @@ export default function AccountPage() {
               )}
               {!session && (
                 <Button primary onClick={login}>
-                  Login
+                  Login with Google
                 </Button>
               )}
             </WhiteBox>
