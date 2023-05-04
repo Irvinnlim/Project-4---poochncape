@@ -88,7 +88,7 @@ export default function Featured({ product }) {
                 <Desc>{product.description}</Desc>
                 <ButtonsWrapper>
                   <ButtonLink
-                    href={"/products/" + product._id}
+                    href={"/product/" + product._id}
                     outline={1}
                     white={1}
                   >
@@ -108,11 +108,7 @@ export default function Featured({ product }) {
           <ImgColumn>
             <RevealWrapper delay={0}>
               <CenterImg>
-                <img
-                  className="main"
-                  src="https://poochncape.s3.amazonaws.com/1682923581312.png"
-                  alt=""
-                />
+                <img className="main" src={product.images?.[0]} alt="" />
               </CenterImg>
             </RevealWrapper>
           </ImgColumn>
