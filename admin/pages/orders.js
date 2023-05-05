@@ -41,7 +41,7 @@ export default function Orders() {
           {orders.length > 0 &&
             orders.map((order) => (
               <tr>
-                <td>{new Date(order.createdAt).toLocaleString()}</td>
+                <td>{new Date(order.createdAt).toLocaleString("en-SG")}</td>
                 <td className={order.paid ? "text-teal-500" : "text-red-600"}>
                   {order.paid ? "YES" : "NO"}
                 </td>
