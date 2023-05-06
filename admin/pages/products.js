@@ -1,20 +1,45 @@
 import Layout from "@/components/Layout";
 import Spinner from "@/components/Spinner";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { withSwal } from "react-sweetalert2";
+import Categories from "./categories";
 
-export default function Products() {
+function Products({ swal }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
+  const { data: session } = useSession();
+
   useEffect(() => {
+    setIsLoading(true);
+    checkAdminType();
+  }, []);
+
+  function checkAdminType() {
+    if (session?.user?.adminType === "superadmin") {
+      loadProducts();
+    } else {
+      swal.fire({
+        text: "You are not authorised!",
+        icon: "error",
+        confirmButtonColor: "#4FD1C5",
+      });
+      router.push("/");
+    }
+  }
+
+  function loadProducts() {
     setIsLoading(true);
     axios.get("/api/products").then((response) => {
       setProducts(response.data);
       setIsLoading(false);
     });
-  }, []);
+  }
 
   return (
     <Layout>
@@ -90,3 +115,5 @@ export default function Products() {
     </Layout>
   );
 }
+
+export default withSwal(({ swal }, ref) => <Categories swal={swal} />);

@@ -1,6 +1,8 @@
 import Layout from "@/components/Layout";
 import Spinner from "@/components/Spinner";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { withSwal } from "react-sweetalert2";
 
@@ -10,12 +12,26 @@ function SettingsPage({ swal }) {
   const [featuredProductId, setFeaturedProductId] = useState("");
   const [shippingFee, setShippingFee] = useState("");
 
+  const router = useRouter();
+  const { data: session } = useSession();
+
   useEffect(() => {
     setIsLoading(true);
-    fetchAll().then(() => {
-      setIsLoading(false);
-    });
+    checkAdminType();
   }, []);
+
+  function checkAdminType() {
+    if (session?.user?.adminType === "superadmin") {
+      fetchAll();
+    } else {
+      swal.fire({
+        text: "You are not authorised!",
+        icon: "error",
+        confirmButtonColor: "#4FD1C5",
+      });
+      router.push("/");
+    }
+  }
 
   async function fetchAll() {
     await axios.get("/api/products").then((res) => {
@@ -27,6 +43,7 @@ function SettingsPage({ swal }) {
     await axios.get("/api/settings?name=shippingFee").then((res) => {
       setShippingFee(res.data.value);
     });
+    setIsLoading(false);
   }
 
   async function saveSettings() {

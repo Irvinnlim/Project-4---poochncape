@@ -7,7 +7,8 @@ import GoogleProvider from "next-auth/providers/google";
 
 async function isAdminEmail(email) {
   mongooseConnect();
-  return !!(await Admin.findOne({ email }));
+  const admin = await Admin.findOne({ email });
+  return admin ? admin.adminType : null;
 }
 
 export const authOptions = {
@@ -20,7 +21,9 @@ export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   callbacks: {
     session: async ({ session, token, user }) => {
-      if (await isAdminEmail(session?.user?.email)) {
+      const adminType = await isAdminEmail(session?.user?.email);
+      if (adminType) {
+        session.user.adminType = adminType;
         return session;
       } else {
         return false;
@@ -33,9 +36,10 @@ export default NextAuth(authOptions);
 
 export async function isAdminRequest(req, res) {
   const session = await getServerSession(req, res, authOptions);
-  if (!(await isAdminEmail(session?.user?.email))) {
-    res.status(401);
+  const adminType = await isAdminEmail(session?.user?.email);
+  if (adminType !== "superadmin") {
+    res.writeHead(302, { Location: "/" }); // Redirect to "/" if not authorized
     res.end();
-    throw "not an admin";
+    throw "You are not authorized!";
   }
 }

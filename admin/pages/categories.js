@@ -1,6 +1,8 @@
 import Layout from "@/components/Layout";
 import Spinner from "@/components/Spinner";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { withSwal } from "react-sweetalert2";
 
@@ -12,9 +14,26 @@ function Categories({ swal }) {
   const [properties, setProperties] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
+  const { data: session } = useSession();
+
   useEffect(() => {
-    fetchCategories();
+    setIsLoading(true);
+    checkAdminType();
   }, []);
+
+  function checkAdminType() {
+    if (session?.user?.adminType === "superadmin") {
+      fetchCategories();
+    } else {
+      swal.fire({
+        text: "You are not authorised!",
+        icon: "error",
+        confirmButtonColor: "#4FD1C5",
+      });
+      router.push("/");
+    }
+  }
 
   function fetchCategories() {
     setIsLoading(true);
