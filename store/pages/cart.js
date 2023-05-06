@@ -161,6 +161,7 @@ export default function CartPage() {
       products.find((product) => product._id === productId)?.price || 0;
     productsTotal += price;
   }
+  // productsTotal = productsTotal.toFixed(2);
 
   if (isSuccess) {
     return (
@@ -225,14 +226,16 @@ export default function CartPage() {
                         </td>
                         <td>
                           $
-                          {cartProducts.filter((id) => id === product._id)
-                            .length * product.price}
+                          {(
+                            cartProducts.filter((id) => id === product._id)
+                              .length * product.price
+                          ).toFixed(2)}
                         </td>
                       </tr>
                     ))}
                     <tr className="subtotal">
                       <td colSpan={2}>Products</td>
-                      <td>${productsTotal}</td>
+                      <td>${productsTotal.toFixed(2)}</td>
                     </tr>
                     <tr className="subtotal">
                       <td colSpan={2}>Shipping</td>
@@ -240,7 +243,12 @@ export default function CartPage() {
                     </tr>
                     <tr className="subtotal total">
                       <td colSpan={2}>Total</td>
-                      <td>${productsTotal + parseInt(shippingFee || 0)}</td>
+                      <td>
+                        $
+                        {(productsTotal + parseInt(shippingFee || 0)).toFixed(
+                          2
+                        )}
+                      </td>
                     </tr>
                   </tbody>
                 </Table>
