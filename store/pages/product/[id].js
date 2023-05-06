@@ -4,6 +4,7 @@ import Center from "@/components/Center";
 import FlyingButton from "@/components/FlyingButton";
 import Header from "@/components/Header";
 import ProductImages from "@/components/ProductImages";
+import ProductReviews from "@/components/ProductReviews";
 import Title from "@/components/Title";
 import WhiteBox from "@/components/WhiteBox";
 import CartIcon from "@/components/icons/CartIcon";
@@ -60,6 +61,7 @@ export default function ProductPage({ product }) {
             </PriceRow>
           </div>
         </ColWrapper>
+        <ProductReviews product={product} />
       </Center>
     </>
   );
