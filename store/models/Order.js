@@ -11,6 +11,11 @@ const OrderSchema = new Schema(
     streetAddress: String,
     country: String,
     paid: Boolean,
+    status: {
+      type: String,
+      enum: ["Preparation", "Shipped", "Delivered"],
+      default: "Preparation",
+    },
   },
   {
     timestamps: true,

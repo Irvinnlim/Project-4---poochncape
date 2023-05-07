@@ -8,12 +8,44 @@ export default function Orders() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    axios.get("/api/orders").then((response) => {
-      setOrders(response.data);
-      setIsLoading(false);
-    });
+    fetchOrders();
   }, []);
+
+  const fetchOrders = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get("/api/orders");
+      setOrders(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+    setIsLoading(false);
+  };
+
+  // const updateOrderStatus = async (orderId, newStatus) => {
+  //   try {
+  //     await axios.put("/api/orders", { orderId, newStatus });
+  //     const updatedOrders = orders.map((order) =>
+  //       order._id === orderId ? { ...order, status: newStatus } : order
+  //     );
+  //     setOrders(updatedOrders);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const handleStatusChange = async (event, orderId) => {
+    const newStatus = event.target.value;
+    try {
+      await axios.put("/api/orders", { orderId, newStatus });
+      const updatedOrders = orders.map((order) =>
+        order._id === orderId ? { ...order, status: newStatus } : order
+      );
+      setOrders(updatedOrders);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Layout>
@@ -25,12 +57,13 @@ export default function Orders() {
             <th>Paid</th>
             <th>Recipient</th>
             <th>Products</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {isLoading && (
             <tr>
-              <td colSpan={4}>
+              <td colSpan={5}>
                 <div className="py-4">
                   <Spinner fullWidth={true} />
                 </div>
@@ -60,6 +93,19 @@ export default function Orders() {
                       <br />
                     </>
                   ))}
+                </td>
+                <td>
+                  <form>
+                    <select
+                      value={order.status}
+                      onChange={(ev) => handleStatusChange(ev, order._id)}
+                      className="mb-0 w-64"
+                    >
+                      <option value="Preparation">Preparing to ship</option>
+                      <option value="Shipped">Shipped</option>
+                      <option value="Delivered">Delivered</option>
+                    </select>
+                  </form>
                 </td>
               </tr>
             ))}

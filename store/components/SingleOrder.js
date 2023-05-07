@@ -1,3 +1,4 @@
+import { primary } from "@/lib/colors";
 import styled from "styled-components";
 
 const StyledOrder = styled.div`
@@ -25,19 +26,25 @@ const Address = styled.div`
   color: #888;
 `;
 
+const Status = styled.div`
+  color: ${primary};
+`;
+
 export default function SingleOrder({ line_items, createdAt, ...rest }) {
   return (
     <StyledOrder>
       <div>
         <time>{new Date(createdAt).toLocaleString("en-SG")}</time>
         <Address>
-          {rest.name}
+          Name: {rest.name}
           <br />
-          {rest.email}
+          Email: {rest.email}
           <br />
-          {rest.streetAddress}
+          Address: {rest.streetAddress}, {rest.country}
           <br />
-          {rest.postalCode} {rest.city}, {rest.country}
+          Postal Code: {rest.city} ({rest.postalCode})
+          <br />
+          <Status>Order Status: {rest.status}</Status>
         </Address>
       </div>
       <div>

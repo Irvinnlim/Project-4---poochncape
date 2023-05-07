@@ -54,6 +54,7 @@ export default async function handler(req, res) {
     streetAddress,
     country,
     paid: false,
+    status: "Preparation",
     userEmail: session?.user?.email,
   });
 
