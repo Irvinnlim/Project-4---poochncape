@@ -161,7 +161,6 @@ export default function CartPage() {
       products.find((product) => product._id === productId)?.price || 0;
     productsTotal += price;
   }
-  // productsTotal = productsTotal.toFixed(2);
 
   if (isSuccess) {
     return (

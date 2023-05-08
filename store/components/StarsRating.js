@@ -59,7 +59,7 @@ export default function StarsRating({
             size={size}
             onClick={() => handleStarClick(number)}
           >
-            {stars >= number ? <StarSolidIcon /> : <StarOutlineIcon />}{" "}
+            {stars >= number ? <StarSolidIcon /> : <StarOutlineIcon />}
           </StarWrapper>
         </>
       ))}

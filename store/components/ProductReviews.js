@@ -123,7 +123,7 @@ export default function ProductReviews({ product }) {
                     <StarsRating
                       size={"sm"}
                       disabled={true}
-                      defaultHowMany={review.stars}
+                      defaultNumber={review.stars}
                     />
                     <time>
                       {new Date(review.createdAt).toLocaleString("en-SG")}
