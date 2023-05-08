@@ -8,6 +8,9 @@ Admin site with features for admin login with various admin roles, dashboard to 
 
 Store site to view featured product, latest listings, all products and categories. With features to add products to cart, add products to wishlist, add product reviews, search products and payment link via Stripe API. 
 
+https://poochncape-admin.vercel.app/
+https://poochncape.vercel.app/
+
 ## Technologies Used
 
 - MongoDB
