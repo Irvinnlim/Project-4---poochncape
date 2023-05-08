@@ -94,7 +94,7 @@ export default function CartPage() {
   const [country, setCountry] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [shippingFee, setShippingFee] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (cartProducts.length > 0) {
@@ -193,71 +193,76 @@ export default function CartPage() {
             <WhiteBox>
               <h2>Cart</h2>
               {isLoading && <Spinner fullWidth={true} />}
-              {!cartProducts.length && <div>Your cart is empty</div>}
-              {products?.length > 0 && (
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Quantity</th>
-                      <th>Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products.map((product) => (
-                      <tr key={product._id}>
-                        <ProductInfoCell>
-                          <ProductImageBox>
-                            <img src={product.images[0]} alt="" />
-                          </ProductImageBox>
-                          {product.title}
-                        </ProductInfoCell>
-                        <td>
-                          <Button
-                            onClick={() => lessOfThisProduct(product._id)}
-                          >
-                            -
-                          </Button>
-                          <QuantityLabel>
-                            {
-                              cartProducts.filter((id) => id === product._id)
-                                .length
-                            }
-                          </QuantityLabel>
-                          <Button
-                            onClick={() => moreOfThisProduct(product._id)}
-                          >
-                            +
-                          </Button>
-                        </td>
-                        <td>
-                          $
-                          {(
-                            cartProducts.filter((id) => id === product._id)
-                              .length * product.price
-                          ).toFixed(2)}
-                        </td>
-                      </tr>
-                    ))}
-                    <tr className="subtotal">
-                      <td colSpan={2}>Products</td>
-                      <td>${productsTotal.toFixed(2)}</td>
-                    </tr>
-                    <tr className="subtotal">
-                      <td colSpan={2}>Shipping</td>
-                      <td>${shippingFee}</td>
-                    </tr>
-                    <tr className="subtotal total">
-                      <td colSpan={2}>Total</td>
-                      <td>
-                        $
-                        {(productsTotal + parseInt(shippingFee || 0)).toFixed(
-                          2
-                        )}
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
+              {!isLoading && (
+                <div>
+                  {!cartProducts.length && <div>Your cart is empty</div>}
+                  {products?.length > 0 && (
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>Product</th>
+                          <th>Quantity</th>
+                          <th>Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {products.map((product) => (
+                          <tr key={product._id}>
+                            <ProductInfoCell>
+                              <ProductImageBox>
+                                <img src={product.images[0]} alt="" />
+                              </ProductImageBox>
+                              {product.title}
+                            </ProductInfoCell>
+                            <td>
+                              <Button
+                                onClick={() => lessOfThisProduct(product._id)}
+                              >
+                                -
+                              </Button>
+                              <QuantityLabel>
+                                {
+                                  cartProducts.filter(
+                                    (id) => id === product._id
+                                  ).length
+                                }
+                              </QuantityLabel>
+                              <Button
+                                onClick={() => moreOfThisProduct(product._id)}
+                              >
+                                +
+                              </Button>
+                            </td>
+                            <td>
+                              $
+                              {(
+                                cartProducts.filter((id) => id === product._id)
+                                  .length * product.price
+                              ).toFixed(2)}
+                            </td>
+                          </tr>
+                        ))}
+                        <tr className="subtotal">
+                          <td colSpan={2}>Products</td>
+                          <td>${productsTotal.toFixed(2)}</td>
+                        </tr>
+                        <tr className="subtotal">
+                          <td colSpan={2}>Shipping</td>
+                          <td>${shippingFee}</td>
+                        </tr>
+                        <tr className="subtotal total">
+                          <td colSpan={2}>Total</td>
+                          <td>
+                            $
+                            {(
+                              productsTotal + parseInt(shippingFee || 0)
+                            ).toFixed(2)}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  )}
+                </div>
               )}
             </WhiteBox>
           </RevealWrapper>
