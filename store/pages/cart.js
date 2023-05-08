@@ -3,6 +3,7 @@ import { CartContext } from "@/components/CartContext";
 import Center from "@/components/Center";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
+import Spinner from "@/components/Spinner";
 import Table from "@/components/Table";
 import WhiteBox from "@/components/WhiteBox";
 import axios from "axios";
@@ -93,11 +94,14 @@ export default function CartPage() {
   const [country, setCountry] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [shippingFee, setShippingFee] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (cartProducts.length > 0) {
+      setIsLoading(true);
       axios.post("/api/cart", { ids: cartProducts }).then((response) => {
         setProducts(response.data);
+        setIsLoading(false);
       });
     } else {
       setProducts([]);
@@ -121,6 +125,7 @@ export default function CartPage() {
     if (!session) {
       return;
     }
+    setIsLoading(true);
     axios.get("/api/address").then((response) => {
       setName(response.data.name);
       setName(response.data.name);
@@ -130,6 +135,7 @@ export default function CartPage() {
       setStreetAddress(response.data.streetAddress);
       setCountry(response.data.country);
     });
+    setIsLoading(false);
   }, [session]);
 
   function moreOfThisProduct(id) {
@@ -186,6 +192,7 @@ export default function CartPage() {
           <RevealWrapper delay={0}>
             <WhiteBox>
               <h2>Cart</h2>
+              {isLoading && <Spinner fullWidth={true} />}
               {!cartProducts.length && <div>Your cart is empty</div>}
               {products?.length > 0 && (
                 <Table>
@@ -257,53 +264,58 @@ export default function CartPage() {
           <RevealWrapper delay={100}>
             <WhiteBox>
               <h2>Order information</h2>
-              <Input
-                type="text"
-                placeholder="Name"
-                value={name}
-                name="name"
-                onChange={(ev) => setName(ev.target.value)}
-              />
-              <Input
-                type="text"
-                placeholder="Email"
-                value={email}
-                name="email"
-                onChange={(ev) => setEmail(ev.target.value)}
-              />
-              <CityHolder>
-                <Input
-                  type="text"
-                  placeholder="City"
-                  value={city}
-                  name="city"
-                  onChange={(ev) => setCity(ev.target.value)}
-                />
-                <Input
-                  type="text"
-                  placeholder="Postal Code"
-                  value={postalCode}
-                  name="postalCode"
-                  onChange={(ev) => setPostalCode(ev.target.value)}
-                />
-              </CityHolder>
-              <Input
-                type="text"
-                placeholder="Street Address"
-                value={streetAddress}
-                name="streetAddress"
-                onChange={(ev) => setStreetAddress(ev.target.value)}
-              />
-              <Input
-                type="text"
-                placeholder="Country"
-                value={country}
-                name="country"
-                onChange={(ev) => setCountry(ev.target.value)}
-              />
-              <Button block primary onClick={goToPayment}>
-                Continue to payment
-              </Button>
+              {isLoading && <Spinner fullWidth={true} />}
+              {!isLoading && (
+                <>
+                  <Input
+                    type="text"
+                    placeholder="Name"
+                    value={name}
+                    name="name"
+                    onChange={(ev) => setName(ev.target.value)}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Email"
+                    value={email}
+                    name="email"
+                    onChange={(ev) => setEmail(ev.target.value)}
+                  />
+                  <CityHolder>
+                    <Input
+                      type="text"
+                      placeholder="City"
+                      value={city}
+                      name="city"
+                      onChange={(ev) => setCity(ev.target.value)}
+                    />
+                    <Input
+                      type="text"
+                      placeholder="Postal Code"
+                      value={postalCode}
+                      name="postalCode"
+                      onChange={(ev) => setPostalCode(ev.target.value)}
+                    />
+                  </CityHolder>
+                  <Input
+                    type="text"
+                    placeholder="Street Address"
+                    value={streetAddress}
+                    name="streetAddress"
+                    onChange={(ev) => setStreetAddress(ev.target.value)}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Country"
+                    value={country}
+                    name="country"
+                    onChange={(ev) => setCountry(ev.target.value)}
+                  />
+                  <Button block primary onClick={goToPayment}>
+                    Continue to payment
+                  </Button>
+                </>
+              )}
             </WhiteBox>
           </RevealWrapper>
         </ColumnsWrapper>
