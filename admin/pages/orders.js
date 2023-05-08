@@ -38,9 +38,9 @@ export default function Orders() {
   return (
     <Layout>
       <h1>Orders</h1>
-      <table className="basic">
-        <thead>
-          <tr>
+      <table className="w-full bg-white rounded-sm shadow-md text-xs sm:text-base md:text-md">
+        <thead className="uppercase border-b border-teal-200 px-4 py-2">
+          <tr className="py-1">
             <th>Date</th>
             <th>Paid</th>
             <th>Recipient</th>
@@ -50,7 +50,7 @@ export default function Orders() {
         </thead>
         <tbody>
           {isLoading && (
-            <tr>
+            <tr className="px-2 py-1">
               <td colSpan={5}>
                 <div className="py-4">
                   <Spinner fullWidth={true} />
@@ -61,13 +61,14 @@ export default function Orders() {
 
           {orders.length > 0 &&
             orders.map((order) => (
-              <tr key={order._id}>
+              <tr className="text-center px-2 py-1" key={order._id}>
                 <td>{new Date(order.createdAt).toLocaleString("en-SG")}</td>
                 <td className={order.paid ? "text-teal-500" : "text-red-600"}>
                   {order.paid ? "YES" : "NO"}
                 </td>
                 <td>
-                  {order.name}&nbsp;
+                  {order.name}
+                  <br />
                   {order.email}
                   <br />
                   {order.streetAddress},{order.city}({order.postalCode})
@@ -87,7 +88,7 @@ export default function Orders() {
                     <select
                       value={order.status}
                       onChange={(ev) => handleStatusChange(ev, order._id)}
-                      className="mb-0 w-64"
+                      className="mb-0"
                     >
                       <option value="Preparation">Preparing to ship</option>
                       <option value="Shipped">Shipped</option>

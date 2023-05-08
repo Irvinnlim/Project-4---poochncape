@@ -155,10 +155,11 @@ function AdminsPage({ swal }) {
         </div>
       </form>
       {!editedAdmin && (
-        <table className="basic mt-4">
-          <thead>
+        <table className="mt-4 w-full bg-white rounded-sm shadow-md text-xs sm:text-base md:text-md">
+          <thead className="uppercase border-b border-teal-200 px-4 py-2">
             <tr>
               <th className="text-left">Admin google email</th>
+              <th></th>
               <th></th>
               <th></th>
             </tr>
@@ -166,7 +167,7 @@ function AdminsPage({ swal }) {
           <tbody>
             {isLoading && (
               <tr>
-                <td colSpan={3}>
+                <td colSpan={4}>
                   <div className="py-4">
                     <Spinner fullWidth={true} />
                   </div>
@@ -181,7 +182,7 @@ function AdminsPage({ swal }) {
                   <td>{admin.adminType}</td>
                   <td>
                     <button
-                      className="btn-primary m-1"
+                      className="bg-primary text-white px-1 py-1 rounded-sm inline-flex mx-1 items-center gap-1 text-xs sm:text-base md:text-sm"
                       onClick={() => {
                         editAdmin(admin);
                       }}
@@ -189,7 +190,7 @@ function AdminsPage({ swal }) {
                       Edit
                     </button>
                     <button
-                      className="btn-red m-1"
+                      className="bg-red-200 text-red-600 px-1 py-1 rounded-sm inline-flex mx-1 items-center gap-1 text-xs sm:text-base md:text-sm shadow-sm"
                       onClick={() => deleteAdmin(admin._id, admin.email)}
                     >
                       Delete

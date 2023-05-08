@@ -221,9 +221,9 @@ function Categories({ swal }) {
         <table className="basic mt-2">
           <thead>
             <tr>
-              <td>Category name</td>
-              <td>Parent category</td>
-              <td></td>
+              <th className="w-20">Category name</th>
+              <th className="w-20">Parent category</th>
+              <th className="w-32"></th>
             </tr>
           </thead>
           <tbody>
