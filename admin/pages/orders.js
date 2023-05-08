@@ -22,18 +22,6 @@ export default function Orders() {
     setIsLoading(false);
   };
 
-  // const updateOrderStatus = async (orderId, newStatus) => {
-  //   try {
-  //     await axios.put("/api/orders", { orderId, newStatus });
-  //     const updatedOrders = orders.map((order) =>
-  //       order._id === orderId ? { ...order, status: newStatus } : order
-  //     );
-  //     setOrders(updatedOrders);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const handleStatusChange = async (event, orderId) => {
     const newStatus = event.target.value;
     try {
@@ -73,7 +61,7 @@ export default function Orders() {
 
           {orders.length > 0 &&
             orders.map((order) => (
-              <tr>
+              <tr key={order._id}>
                 <td>{new Date(order.createdAt).toLocaleString("en-SG")}</td>
                 <td className={order.paid ? "text-teal-500" : "text-red-600"}>
                   {order.paid ? "YES" : "NO"}

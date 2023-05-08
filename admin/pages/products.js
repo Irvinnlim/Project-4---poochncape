@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { withSwal } from "react-sweetalert2";
-import Categories from "./categories";
 
 function Products({ swal }) {
   const [products, setProducts] = useState([]);
@@ -116,4 +115,4 @@ function Products({ swal }) {
   );
 }
 
-export default withSwal(({ swal }, ref) => <Categories swal={swal} />);
+export default withSwal(({ swal }, ref) => <Products swal={swal} />);
