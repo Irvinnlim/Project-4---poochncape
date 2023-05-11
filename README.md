@@ -4,7 +4,7 @@
 
 A full stack eCommerce application built with two applications - an Admin site and a Storefront site. Built with NextJS and MongoDB. 
 
-Admin site with features for admin login with various admin roles, dashboard to view business operations on orders and revenue, products page to upload new, edit and delete products, categories page to create new, edit and delete categories, orders page to view customers' orders, admins page to manage admins and admin roles, settings page to edit featured products and shipping fees.
+Admin site with features for admin login with various admin roles, dashboard to view business operations on orders and revenue, products page to upload new, edit and delete products, categories page to create new, edit and delete categories, orders page to view customers' orders and update order status, admins page to manage admins and admin roles, settings page to edit featured products and shipping fees.
 
 Store site to view featured product, latest listings, all products and categories. With features to add products to cart, add products to wishlist, add product reviews, search products and payment link via Stripe API. 
 
@@ -24,7 +24,7 @@ https://poochncape.vercel.app/
     - Styled Components (Store)
     - Next-Reveal (Store)
     - React SweetAlert2
-    - BounceLoader
+    - React Spinners
 
 ## Approach to Project
 
